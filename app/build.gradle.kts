@@ -5,13 +5,13 @@ plugins {
 android {
     namespace = "com.shikharsingh.smartpantrymanager"
     compileSdk {
-        version = release(37)
+        version = release(35)
     }
 
     defaultConfig {
         applicationId = "com.shikharsingh.smartpantrymanager"
         minSdk = 24
-        targetSdk = 37
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 

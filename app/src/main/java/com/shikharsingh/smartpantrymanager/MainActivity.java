@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements PantryAdapter.OnI
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         dbHelper = new DatabaseHelper(this);
         recyclerView = findViewById(R.id.recyclerViewPantry);
