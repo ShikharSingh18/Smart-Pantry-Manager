@@ -8,7 +8,7 @@ Grab the latest APK directly from the [Releases page](https://github.com/Shikhar
 
 ## The Concept
 
-Most recipe apps show you what you *could* make if you bought a few more things. Smart Pantry Manager does the opposite: it applies a **strict-matching rule** against your current pantry, so a recipe only ever appears in your suggestions if every single ingredient it needs — in at least the quantity it needs — is already sitting in your kitchen. No partial matches, no "almost there" recipes cluttering the list, no wasted trips to the store.
+Most recipe apps show you what you *could* make if you bought a few more things. Smart Pantry Manager does the opposite: it applies a **strict-matching rule** against your current pantry, so a recipe only ever appears in your suggestions if every single ingredient it needs (in at least the quantity it needs) is already sitting in your kitchen. No partial matches, no "almost there" recipes cluttering the list, no wasted trips to the store.
 
 ## Core Features
 
@@ -25,8 +25,8 @@ Implemented in `IngredientMatcher.java`. For a recipe to be suggested:
 
 1. Every required ingredient must exist somewhere in the pantry.
 2. Where the pantry item's unit and the recipe's required unit can be reconciled (e.g. both measured in grams, or both in pieces), the pantry quantity must be **greater than or equal to** the required quantity.
-3. Ingredient names are normalized (lowercase, whitespace-trimmed, naive singular/plural stripping) so "tomato" and "tomatoes" are treated as the same ingredient — a deliberate, documented simplification rather than a full NLP solution, since the assignment brief explicitly allows this.
-4. If a recipe is missing even one ingredient, or doesn't have enough of it, it is excluded entirely from the suggestions list — no partial matches are ever shown.
+3. Ingredient names are normalized (lowercase, whitespace-trimmed, naive singular/plural stripping) so "tomato" and "tomatoes" are treated as the same ingredient, a deliberate, as per assignment requirements.
+4. If a recipe is missing even one ingredient, or doesn't have enough of it, it is excluded entirely from the suggestions list as no partial matches are ever shown.
 
 **Known limitation:** true cross-unit conversion (e.g. converting grams to pieces) is out of scope. If a pantry item's unit can't be reconciled with the recipe's required unit after normalisation, that specific ingredient falls back to a presence-only check rather than failing outright.
 
