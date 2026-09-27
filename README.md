@@ -1,6 +1,6 @@
 # Smart Pantry Manager
 
-A native Android application, written in Java, that helps reduce food waste by tracking the ingredients a user actually has at home and suggesting only the recipes they can cook **right now** — with zero shopping required.
+A native Android application, written in Java, that helps reduce food waste by tracking the ingredients a user actually has at home and suggesting only the recipes they can cook **right now**, with zero shopping required.
 
 ## Download
 
@@ -12,11 +12,11 @@ Most recipe apps show you what you *could* make if you bought a few more things.
 
 ## Core Features
 
-- **Pantry management** — add, edit, and delete ingredients (name, quantity, unit, optional expiry date), all persisted locally.
-- **Pantry List screen** — a live RecyclerView of every ingredient currently tracked, with an expiring-soon banner that filters the list on tap, sort options (alphabetical / soonest-expiring), and an empty-state message when the pantry is empty.
-- **Suggested Recipes screen** — runs the strict-matching algorithm against the current pantry and shows only recipes that can genuinely be made in full, right now.
-- **Recipe Detail screen** — full ingredient list (with quantities) and step-by-step method for a selected recipe.
-- **Settings screen** — toggle for expiring-soon alerts, with a live icon that reflects the toggle state.
+- **Pantry management**: add, edit, and delete ingredients (name, quantity, unit, optional expiry date), all persisted locally.
+- **Pantry List screen**: a live RecyclerView of every ingredient currently tracked, with an expiring-soon banner that filters the list on tap, sort options (alphabetical / soonest-expiring), and an empty-state message when the pantry is empty.
+- **Suggested Recipes screen**: runs the strict-matching algorithm against the current pantry and shows only recipes that can genuinely be made in full, right now.
+- **Recipe Detail screen**: full ingredient list (with quantities) and step-by-step method for a selected recipe.
+- **Settings screen**: toggle for expiring-soon alerts, with a live icon that reflects the toggle state.
 - **16 pre-seeded recipes**, each with real per-ingredient quantities and units, loaded automatically on first run.
 
 ## The Strict-Matching Algorithm
@@ -28,7 +28,7 @@ Implemented in `IngredientMatcher.java`. For a recipe to be suggested:
 3. Ingredient names are normalized (lowercase, whitespace-trimmed, naive singular/plural stripping) so "tomato" and "tomatoes" are treated as the same ingredient — a deliberate, documented simplification rather than a full NLP solution, since the assignment brief explicitly allows this.
 4. If a recipe is missing even one ingredient, or doesn't have enough of it, it is excluded entirely from the suggestions list — no partial matches are ever shown.
 
-**Known limitation:** true cross-unit conversion (e.g. converting grams to pieces) is out of scope. If a pantry item's unit can't be reconciled with the recipe's required unit after normalization, that specific ingredient falls back to a presence-only check rather than failing outright.
+**Known limitation:** true cross-unit conversion (e.g. converting grams to pieces) is out of scope. If a pantry item's unit can't be reconciled with the recipe's required unit after normalisation, that specific ingredient falls back to a presence-only check rather than failing outright.
 
 ## Database Choice: SQLite
 
