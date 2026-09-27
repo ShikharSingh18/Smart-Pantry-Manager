@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.SmartPantryManager" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/manrope_family</item>
+        <item name="fontFamily">@font/manrope_family</item>
         <item name="colorPrimary">@color/pantry_primary</item>
         <item name="colorOnPrimary">@color/pantry_on_primary</item>
         <item name="colorPrimaryContainer">@color/pantry_primary</item>

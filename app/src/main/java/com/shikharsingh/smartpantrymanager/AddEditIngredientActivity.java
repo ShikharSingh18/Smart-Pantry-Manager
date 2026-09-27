@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.util.List;
 
@@ -27,6 +28,12 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_ingredient);
 
+        Toolbar toolbar = findViewById(R.id.toolbarAddEdit); // use your layout's actual toolbar id
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         dbHelper = new DatabaseHelper(this);
         editName = findViewById(R.id.editTextName);
         editQuantity = findViewById(R.id.editTextQuantity);
@@ -37,9 +44,9 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         editingItemId = getIntent().getLongExtra("pantry_id", NO_ID);
         if (editingItemId != NO_ID) {
             loadExistingItem(editingItemId);
-            setTitle("Edit Ingredient");
+            if (getSupportActionBar() != null) getSupportActionBar().setTitle("Edit Ingredient");
         } else {
-            setTitle("Add Ingredient");
+            if (getSupportActionBar() != null) getSupportActionBar().setTitle("Add Ingredient");
         }
 
         buttonSave.setOnClickListener(v -> saveItem());
@@ -79,10 +86,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         if (editingItemId == NO_ID) {
             dbHelper.addPantryItem(name, quantity, unit, expiry);
-            Toast.makeText(this, "Ingredient added", Toast.LENGTH_SHORT).show();
         } else {
             dbHelper.updatePantryItem(editingItemId, name, quantity, unit, expiry);
-            Toast.makeText(this, "Ingredient updated", Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(this, "Ingredient saved", Toast.LENGTH_SHORT).show();
         finish(); // returns to MainActivity, which refreshes in onResume
