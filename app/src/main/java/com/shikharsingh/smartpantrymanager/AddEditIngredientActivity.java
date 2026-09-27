@@ -84,6 +84,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
             dbHelper.updatePantryItem(editingItemId, name, quantity, unit, expiry);
             Toast.makeText(this, "Ingredient updated", Toast.LENGTH_SHORT).show();
         }
+        Toast.makeText(this, "Ingredient saved", Toast.LENGTH_SHORT).show();
         finish(); // returns to MainActivity, which refreshes in onResume
     }
 }
