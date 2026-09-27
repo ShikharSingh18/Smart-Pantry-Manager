@@ -1,6 +1,21 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.SmartPantryManager" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/pantry_primary</item>
+        <item name="colorOnPrimary">@color/pantry_on_primary</item>
+        <item name="colorPrimaryContainer">@color/pantry_primary</item>
+        <item name="colorOnPrimaryContainer">@color/pantry_on_primary</item>
+
+        <item name="colorSecondary">@color/pantry_accent</item>
+        <item name="colorOnSecondary">@color/pantry_text_primary</item>
+
+        <item name="colorSurface">@color/pantry_surface</item>
+        <item name="colorOnSurface">@color/pantry_text_primary</item>
+
+        <item name="android:colorBackground">@color/pantry_background</item>
+        <item name="colorOnBackground">@color/pantry_text_primary</item>
+
+        <item name="colorError">@color/pantry_error</item>
     </style>
 
 </resources>

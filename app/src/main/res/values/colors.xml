@@ -2,13 +2,36 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="pantry_primary">#6750A4</color>
-    <color name="pantry_primary_dark">#4F378B</color>
+
+    <!-- Primary brand color, matched to the app icon's blue produce item -->
+    <color name="pantry_primary">#4092C9</color>
+    <color name="pantry_primary_dark">#2F7AA8</color>
     <color name="pantry_on_primary">#FFFFFF</color>
-    <color name="pantry_background">#FFFBFE</color>
-    <color name="pantry_surface">#F3EDF7</color>
-    <color name="pantry_text_primary">#1C1B1F</color>
-    <color name="pantry_text_secondary">#79747E</color>
-    <color name="pantry_error">#B3261E</color>
-    <color name="pantry_card_stroke">#E7E0EC</color>
+
+    <!-- Neutral surfaces - kept light/neutral for readable body text -->
+    <color name="pantry_background">#FAFAFA</color>
+    <color name="pantry_surface">#FFFFFF</color>
+    <color name="pantry_card_stroke">#E0E0E0</color>
+
+    <!-- Text -->
+    <color name="pantry_text_primary">#212121</color>
+    <color name="pantry_text_secondary">#616161</color>
+
+    <!-- Error / destructive actions and expired-item indicators, matched to icon red -->
+    <color name="pantry_error">#D64740</color>
+
+    <!-- Reserved accent tied directly to the app icon's background green.
+         Use sparingly (splash screen, subtle highlights) — fails text
+         contrast -->
+    <color name="pantry_brand_accent">#3FD27E</color>
+
+    <!-- Accent for icon tints/badges only — do not use as a text background -->
+    <color name="pantry_accent">#FF9B30</color>
+
+    <!-- Warm tint for the expiring-soon banner, matched to icon's lighter orange -->
+    <color name="pantry_expiring_tint_bg">#FFF3E0</color>
+    <color name="pantry_expiring_tint_stroke">#F0AE62</color>
+
+    <!-- success accent, matched to icon's olive tone -->
+    <color name="pantry_success">#70942D</color>
 </resources>
