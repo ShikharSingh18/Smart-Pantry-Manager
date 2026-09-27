@@ -1,12 +1,12 @@
 # Smart Pantry Manager
 
-A native Android application, written in Java, that helps reduce food waste by tracking the ingredients a user actually has at home and suggesting only the recipes they can cook **right now**, with zero shopping required.
+A native Android application, written in Java, that helps reduce food waste by tracking the ingredients a user actually has at home and suggesting only the recipes they can cook **right now**.
 
 ## Download
 
 Grab the latest APK directly from the [Releases page](https://github.com/ShikharSingh18/Smart-Pantry-Manager/releases/latest). Enable "Install from unknown sources" on your Android device, then open the downloaded APK to install. Optionally you may build from the source files.
 
-## The Concept
+## Concept
 
 Most recipe apps show you what you *could* make if you bought a few more things. Smart Pantry Manager does the opposite: it applies a **strict-matching rule** against your current pantry, so a recipe only ever appears in your suggestions if every single ingredient it needs (in at least the quantity it needs) is already sitting in your kitchen. No partial matches, no "almost there" recipes cluttering the list, no wasted trips to the store.
 
@@ -34,7 +34,7 @@ Implemented in `IngredientMatcher.java`. For a recipe to be suggested:
 
 This app uses **SQLite via `SQLiteOpenHelper`**, not Firebase or PostgreSQL. Reasoning:
 
-- The app's data is inherently single-user and local — there's no requirement for multi-device sync or real-time collaboration, so a cloud backend would add complexity without adding value.
+- The app's data is inherently single-user and local, and since there's no requirement for multi-device sync or real-time collaboration, a cloud backend would add complexity without adding value.
 - SQLite works fully offline, which matches a pantry-tracking use case where a user shouldn't need an internet connection just to check what's in their kitchen.
 - It's the persistence approach covered in depth in the module's own content on Activities, Adapters, and persistent data, making it the most defensible and explainable choice for this assignment.
 - Two tables are used: `pantry_items` (the user's current ingredients, full CRUD) and `recipes` (a fixed, seeded collection, read-only after first launch).
@@ -71,22 +71,6 @@ This app uses **SQLite via `SQLiteOpenHelper`**, not Firebase or PostgreSQL. Rea
 No external services, API keys, or network connection are required to run or test this app.
 
 Alternatively, skip building entirely and install directly from the [prebuilt APK release](https://github.com/ShikharSingh18/Smart-Pantry-Manager/releases/latest).
-
-## Project Structure (Key Files)
-
-```
-app/src/main/java/com/shikharsingh/smartpantrymanager/
-├── MainActivity.java              # Pantry list, banner, sort, filter
-├── AddEditIngredientActivity.java # Add/edit ingredient with validation + date picker
-├── SuggestedRecipesActivity.java  # Runs strict-matching against the pantry
-├── RecipeDetailActivity.java      # Full recipe view
-├── SettingsActivity.java          # Expiring-soon alerts toggle
-├── DatabaseHelper.java            # SQLite schema, seeding, and CRUD
-├── IngredientMatcher.java         # Strict-matching + normalization logic
-├── PantryItem.java / Recipe.java / RecipeIngredient.java  # Data models
-├── PantryAdapter.java / RecipeAdapter.java                # RecyclerView adapters
-└── ExpiryUtils.java               # Shared date-comparison helper
-```
 
 ## Author
 
