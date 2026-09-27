@@ -4,7 +4,7 @@ A native Android application, written in Java, that helps reduce food waste by t
 
 ## Download
 
-Grab the latest APK directly from the [Releases page](https://github.com/ShikharSingh18/Smart-Pantry-Manager/releases/latest) — no build required. Enable "Install from unknown sources" on your Android device, then open the downloaded APK to install.
+Grab the latest APK directly from the [Releases page](https://github.com/ShikharSingh18/Smart-Pantry-Manager/releases/latest). Enable "Install from unknown sources" on your Android device, then open the downloaded APK to install. Optionally you may build from the source files.
 
 ## The Concept
 
