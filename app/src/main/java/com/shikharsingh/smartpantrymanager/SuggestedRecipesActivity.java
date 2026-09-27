@@ -24,6 +24,8 @@ public class SuggestedRecipesActivity extends AppCompatActivity implements Recip
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suggested_recipes);
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         setTitle("Suggested Recipes");
 
         dbHelper = new DatabaseHelper(this);
