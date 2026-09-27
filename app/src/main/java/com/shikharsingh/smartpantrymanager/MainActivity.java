@@ -2,42 +2,48 @@ package com.shikharsingh.smartpantrymanager;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Pantry List screen: the app's home screen. Shows every ingredient the
- * user currently has, with edit/delete actions, plus navigation to
- * Suggested Recipes and Settings via the toolbar menu, and an Add button.
- */
 public class MainActivity extends AppCompatActivity implements PantryAdapter.OnItemActionListener {
+    // Threshold chosen for the  demo; adjustable without touching UI logic
+    private static final int EXPIRING_SOON_DAYS = 3;
 
     private DatabaseHelper dbHelper;
     private RecyclerView recyclerView;
-    private PantryAdapter adapter;
-    private List<PantryItem> pantryItems;
+    private List<PantryItem> allPantryItems;
+    private boolean showingExpiringOnly = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         dbHelper = new DatabaseHelper(this);
         recyclerView = findViewById(R.id.recyclerViewPantry);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        findViewById(R.id.fabAddItem).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddEditIngredientActivity.class);
-            startActivity(intent);
+        findViewById(R.id.fabAddItem).setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, AddEditIngredientActivity.class)));
+
+        findViewById(R.id.expiryBanner).setOnClickListener(v -> {
+            showingExpiringOnly = !showingExpiringOnly;
+            renderList();
         });
 
         loadPantryItems();
@@ -46,13 +52,42 @@ public class MainActivity extends AppCompatActivity implements PantryAdapter.OnI
     @Override
     protected void onResume() {
         super.onResume();
-        loadPantryItems(); // refresh in case items were added/edited on another screen
+        loadPantryItems();
     }
 
     private void loadPantryItems() {
-        pantryItems = dbHelper.getAllPantryItems();
-        adapter = new PantryAdapter(pantryItems, this);
-        recyclerView.setAdapter(adapter);
+        allPantryItems = dbHelper.getAllPantryItems();
+        renderList();
+    }
+
+    private void renderList() {
+        SharedPreferences prefs = getSharedPreferences(SettingsActivity.PREFS_NAME, MODE_PRIVATE);
+        boolean alertsEnabled = prefs.getBoolean(SettingsActivity.KEY_EXPIRY_ALERTS, true);
+
+        List<PantryItem> expiringSoon = new ArrayList<>();
+        if (alertsEnabled) {
+            for (PantryItem item : allPantryItems) {
+                if (ExpiryUtils.isExpiringSoon(item.getExpiryDate(), EXPIRING_SOON_DAYS)
+                        || ExpiryUtils.isExpired(item.getExpiryDate())) {
+                    expiringSoon.add(item);
+                }
+            }
+        }
+
+        View banner = findViewById(R.id.expiryBanner);
+        TextView bannerText = findViewById(R.id.expiryBannerText);
+
+        if (!alertsEnabled || expiringSoon.isEmpty()) {
+            banner.setVisibility(View.GONE);
+            showingExpiringOnly = false;
+        } else {
+            banner.setVisibility(View.VISIBLE);
+            bannerText.setText(expiringSoon.size() + " ingredient(s) expiring soon - tap to "
+                    + (showingExpiringOnly ? "show all" : "filter"));
+        }
+
+        List<PantryItem> listToShow = showingExpiringOnly ? expiringSoon : allPantryItems;
+        recyclerView.setAdapter(new PantryAdapter(listToShow, this));
     }
 
     @Override

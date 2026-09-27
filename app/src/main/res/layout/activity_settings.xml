@@ -1,23 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:fitsSystemWindows="true">
+    android:background="@color/pantry_background">
 
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarSettings"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/pantry_primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardExpiryToggle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="App Settings"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="1dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbarSettings">
 
-    <Switch
-        android:id="@+id/switchExpiryAlerts"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Notify me about expiring-soon ingredients"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/iconNotification"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="Notification status"
+                app:tint="@color/pantry_primary"/>
+
+            <TextView
+                android:id="@+id/textExpiryToggleLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:text="Expiring Soon Alerts"
+                android:textSize="16sp"
+                android:textColor="@color/pantry_text_primary"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchExpiryAlerts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
