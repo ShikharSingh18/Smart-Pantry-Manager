@@ -1,5 +1,6 @@
 package com.shikharsingh.smartpantrymanager;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -8,7 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Handles BOTH adding a new pantry item and editing an existing one.
@@ -18,6 +24,7 @@ import java.util.List;
 public class AddEditIngredientActivity extends AppCompatActivity {
 
     private static final long NO_ID = -1L;
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
     private DatabaseHelper dbHelper;
     private EditText editName, editQuantity, editUnit, editExpiry;
@@ -41,6 +48,12 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         editExpiry = findViewById(R.id.editTextExpiry);
         Button buttonSave = findViewById(R.id.buttonSave);
 
+        // Expiry field is tap-to-open-picker only; disable the keyboard/cursor
+        // so it behaves like a button instead of free-text input.
+        editExpiry.setFocusable(false);
+        editExpiry.setClickable(true);
+        editExpiry.setOnClickListener(v -> showDatePicker());
+
         editingItemId = getIntent().getLongExtra("pantry_id", NO_ID);
         if (editingItemId != NO_ID) {
             loadExistingItem(editingItemId);
@@ -50,6 +63,37 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         }
 
         buttonSave.setOnClickListener(v -> saveItem());
+    }
+
+    // Opens the native DatePickerDialog, pre-filled with the existing expiry
+    // date when editing, or today's date otherwise. Result is written back
+    // into editExpiry using the same yyyy-MM-dd format ExpiryUtils expects.
+    private void showDatePicker() {
+        Calendar calendar = Calendar.getInstance();
+
+        String existingDate = editExpiry.getText().toString().trim();
+        if (!existingDate.isEmpty()) {
+            try {
+                Date parsed = DATE_FORMAT.parse(existingDate);
+                if (parsed != null) calendar.setTime(parsed);
+            } catch (ParseException ignored) {
+                // fall back to today's date if the existing text isn't a valid date
+            }
+        }
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    Calendar selected = Calendar.getInstance();
+                    selected.set(selectedYear, selectedMonth, selectedDay);
+                    editExpiry.setText(DATE_FORMAT.format(selected.getTime()));
+                },
+                year, month, day);
+
+        datePickerDialog.show();
     }
 
     private void loadExistingItem(long id) {
