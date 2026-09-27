@@ -29,7 +29,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
             if (recipe.getId() == recipeId) {
                 setTitle(recipe.getName());
                 textName.setText(recipe.getName());
-                textIngredients.setText("Ingredients: " + String.join(", ", recipe.getIngredients()));
+                textIngredients.setText("Ingredients: " + recipe.getIngredientsDisplayString());
                 textSteps.setText(recipe.getSteps());
                 break;
             }
